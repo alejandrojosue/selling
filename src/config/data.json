@@ -1,6 +1,7 @@
 [
   {
     "name": "kidkinder",
+    "target": "template01",
     "title": {
       "es": "Kinder de niños",
       "en": "KidKinder"
@@ -18,6 +19,7 @@
   },
   {
     "name": "most-logistic-company",
+    "target": "template02",
     "title": {
       "es": "Mejor empresa de logística",
       "en": "Most Logistic Company"
