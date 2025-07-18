@@ -1,0 +1,22 @@
+---
+import Footer from '../components/footer.astro';
+import Navbar from '../components/Navbar.astro';
+import '../styles/global.css';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Galería de Plantillas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body class="font-sans bg-gray-50 text-gray-900">
+    <Navbar />
+    <div class="max-w-screen-xl mx-auto px-4 pt-6 flex flex-col md:flex-row gap-6">
+      <main class="flex-1">
+        <slot />
+      </main>
+    </div>
+    <Footer/>
+  </body>
+</html>

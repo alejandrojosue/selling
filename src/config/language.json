@@ -1,0 +1,24 @@
+{
+  "en": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "gallery": "Gallery",
+    "language": "Language",
+    "welcome": "Welcome to our template gallery!",
+    "aboutText": "We specialize in modern website templates.",
+    "contactText": "Feel free to reach out to us anytime.",
+    "galleryText": "Explore our collection of ready-to-use designs."
+  },
+  "es": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "gallery": "Galería",
+    "language": "Idioma",
+    "welcome": "¡Bienvenido a nuestra galería de plantillas!",
+    "aboutText": "Nos especializamos en plantillas web modernas.",
+    "contactText": "No dudes en contactarnos en cualquier momento.",
+    "galleryText": "Explora nuestra colección de diseños listos para usar."
+  }
+}

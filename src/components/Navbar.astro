@@ -1,0 +1,44 @@
+---
+  import languageData from '../config/language.json';
+  const currentLang = 'es';
+  const labels = languageData[currentLang];
+---
+
+<nav class="bg-white shadow p-4 flex justify-between items-center">
+  <div class="flex gap-4">
+    <a href="/" class="font-semibold hover:text-blue-600" data-key="home">{labels.home}</a>
+    <a href="/about" class="font-semibold hover:text-blue-600" data-key="about">{labels.about}</a>
+    <a href="/contact" class="font-semibold hover:text-blue-600" data-key="contact">{labels.contact}</a>
+    <a href="/gallery" class="font-semibold hover:text-blue-600" data-key="gallery">{labels.gallery}</a>
+  </div>
+  <div class=" hidden">
+    <label for="lang" class="mr-2" data-key="language">{labels.language}</label>
+    <select id="lang" class="border p-1 rounded">
+      <option value="es">ES</option>
+      <option value="en">EN</option>
+    </select>
+  </div>
+
+  <script>
+    import languageData from '../config/language.json';
+    const localLang = localStorage.getItem('lang') || 'es';
+    document.getElementById('lang').value = localLang;
+
+    function applyLang(lang) {
+      document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.dataset.key;
+        if (languageData[lang] && languageData[lang][key]) {
+          el.textContent = languageData[lang][key];
+        }
+      });
+    }
+
+    document.getElementById('lang').addEventListener('change', (e) => {
+      const lang = e.target.value;
+      localStorage.setItem('lang', lang);
+      applyLang(lang);
+    });
+
+    applyLang(localLang);
+  </script>
+</nav>

@@ -1,0 +1,128 @@
+[
+  {
+    "name": "blue",
+    "label": {
+      "es": "Azul",
+      "en": "Blue"
+    }
+  },
+  {
+    "name": "gray",
+    "label": {
+      "es": "Gris",
+      "en": "Gray"
+    }
+  },
+  {
+    "name": "white",
+    "label": {
+      "es": "Blanco",
+      "en": "White"
+    }
+  },
+  {
+    "name": "black",
+    "label": {
+      "es": "Negro",
+      "en": "Black"
+    }
+  },
+  {
+    "name": "red",
+    "label": {
+      "es": "Rojo",
+      "en": "Red"
+    }
+  },
+  {
+    "name": "green",
+    "label": {
+      "es": "Verde",
+      "en": "Green"
+    }
+  },
+  {
+    "name": "orange",
+    "label": {
+      "es": "Naranja",
+      "en": "Orange"
+    }
+  },
+  {
+    "name": "purple",
+    "label": {
+      "es": "Morado",
+      "en": "Purple"
+    }
+  },
+  {
+    "name": "pastel",
+    "label": {
+      "es": "Pastel",
+      "en": "Pastel"
+    }
+  },
+  {
+    "name": "yellow",
+    "label": {
+      "es": "Amarillo",
+      "en": "Yellow"
+    }
+  },
+  {
+    "name": "gold",
+    "label": {
+      "es": "Oro",
+      "en": "Gold"
+    }
+  },
+  {
+    "name": "brown",
+    "label": {
+      "es": "Marrón",
+      "en": "Brown"
+    }
+  },
+  {
+    "name": "beige",
+    "label": {
+      "es": "Beige",
+      "en": "Beige"
+    }
+  },
+  {
+    "name": "navy",
+    "label": {
+      "es": "Azul Marino",
+      "en": "Navy"
+    }
+  },
+  {
+    "name": "cyan",
+    "label": {
+      "es": "Cian",
+      "en": "Cyan"
+    }
+  },
+  {
+    "name": "pink",
+    "label": {
+      "es": "Rosa",
+      "en": "Pink"
+    }
+  },
+  {
+    "name": "lightblue",
+    "label": {
+      "es": "Azul claro",
+      "en": "Light blue"
+    }
+  },
+  {
+    "name": "lightgrey",
+    "label": {
+      "es": "Gris claro",
+      "en": "Light grey"
+    }
+  }
+]

@@ -1,0 +1,48 @@
+---
+import '../styles/global.css';
+const lang = Astro.cookies.get("lang")?.value || "es";
+
+const messages = {
+ es: {
+  title: "Página no encontrada",
+  description: "Lo sentimos, la página que buscas no existe.",
+  back: "Volver al inicio",
+ },
+ en: {
+  title: "Page Not Found",
+  description: "Sorry, the page you're looking for doesn't exist.",
+  back: "Back to homepage",
+ },
+};
+
+const t = messages[lang];
+---
+
+<html lang="en">
+ <head>
+  <meta charset="UTF-8" />
+  <title>Galería de Plantillas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ </head>
+ <body class="font-sans bg-gray-50 text-gray-900">
+  <div
+   class="max-w-screen-xl mx-auto px-4 py-6 flex flex-col md:flex-row gap-6"
+  >
+   <main class="flex-1">
+    <section
+     class="flex flex-col items-center justify-center min-h-[60vh] text-center px-4"
+    >
+     <h1 class="text-6xl font-bold text-indigo-600 mb-4">404</h1>
+     <h2 class="text-2xl font-semibold text-gray-800 mb-2">{t.title}</h2>
+     <p class="text-gray-600 mb-6">{t.description}</p>
+     <a
+      href="/"
+      class="inline-block bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-6 py-3 rounded-lg transition"
+     >
+      {t.back}
+     </a>
+    </section>
+   </main>
+  </div>
+ </body>
+</html>

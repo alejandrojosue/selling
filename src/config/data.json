@@ -1,0 +1,36 @@
+[
+  {
+    "name": "kidkinder",
+    "title": {
+      "es": "Kinder de niños",
+      "en": "KidKinder"
+    },
+    "description": {
+      "es": "Bootstrap, Educación, Escuela, Familia, Responsive, Servicios, niños.",
+      "en": "Bootstrap, Education, School, Family, Responsive, Services, kids, children."
+    },
+    "image": "/img/template01.JPG",
+    "colors": [
+      "lightblue",
+      "lightgrey",
+      "white"
+    ]
+  },
+  {
+    "name": "most-logistic-company",
+    "title": {
+      "es": "Mejor empresa de logística",
+      "en": "Most Logistic Company"
+    },
+    "description": {
+      "es": "Bootstrap, Coches, Multiusos, One Page, Responsive, Servicios, Transporte.",
+      "en": "Bootstrap, Education, School, Family, Jquery, HTML Templates, Responsive, Services."
+    },
+    "image": "/img/template02.JPG",
+    "colors": [
+      "lightblue",
+      "blue",
+      "white"
+    ]
+  }
+]

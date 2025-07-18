@@ -1,0 +1,92 @@
+---
+import colors from "../config/colors.json";
+const { lang = "es" } = Astro.props;
+---
+
+<div
+  class="block w-full md:w-64 bg-white shadow-md rounded-xl p-4 sticky top-4 z-10"
+>
+  <h2 class="text-lg font-semibold text-gray-700 mb-3">
+    {lang === "es" ? "Filtrar por color" : "Filter by color"}
+  </h2>
+  <div class="flex flex-wrap gap-2 mb-4" id="color-buttons">
+    {colors.map((color) => (
+      <button
+        type="button"
+        class="color-btn text-sm border-gray-700 cursor-pointer px-3 py-1 rounded-full transition"
+        style={`background-color: ${color.name}; color: black; ${color.name === 'black' ? 'color: white;' : ''}`}
+        data-color={color.name}
+        id={`color-btn-${color.name}`}
+      >
+        {color.label[lang]}
+      </button>
+    ))}
+  </div>
+
+  <button
+    type="button"
+    class="clear-btn text-sm w-full cursor-pointer px-3 py-2 rounded-lg text-white bg-indigo-500 hover:bg-indigo-600 transition font-semibold"
+  >
+    {lang === "es" ? "Limpiar filtro" : "Clear filter"}
+  </button>
+</div>
+
+<script type="module" is:inline>
+  // Funciones para manejar selección múltiple y actualizar UI
+  function getSelectedColors() {
+    const stored = localStorage.getItem("selectedColors");
+    return stored ? JSON.parse(stored) : [];
+  }
+
+  function setSelectedColors(colors) {
+    localStorage.setItem("selectedColors", JSON.stringify(colors));
+    window.dispatchEvent(new Event("color-filter-changed"));
+  }
+
+  function toggleColor(color) {
+    let selectedColors = getSelectedColors();
+    if (selectedColors.includes(color)) {
+      selectedColors = selectedColors.filter(c => c !== color);
+    } else {
+      selectedColors.push(color);
+    }
+    setSelectedColors(selectedColors);
+  }
+
+  function clearColors() {
+    localStorage.removeItem("selectedColors");
+    window.dispatchEvent(new Event("color-filter-changed"));
+  }
+
+  function updateButtonStates() {
+    const selectedColors = getSelectedColors();
+    document.querySelectorAll('.color-btn').forEach((btn) => {
+      const color = btn.dataset.color;
+      if (selectedColors.includes(color)) {
+        btn.classList.add('border-3', 'font-bold');
+      } else {
+        btn.classList.remove('border-3', 'font-bold');
+      }
+    });
+  }
+
+  // Registro eventos de click sobre botones con delegación
+  const container = document.getElementById('color-buttons');
+  container.addEventListener('click', (e) => {
+    if (e.target.classList.contains('color-btn')) {
+      const color = e.target.dataset.color;
+      toggleColor(color);
+      updateButtonStates();
+    }
+  });
+
+  // Evento para limpiar filtro
+  const clearBtn = document.querySelector('.clear-btn');
+  clearBtn.addEventListener('click', () => {
+    clearColors();
+    updateButtonStates();
+  });
+
+  // Inicialización UI
+  updateButtonStates();
+</script>

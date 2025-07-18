@@ -1,0 +1,216 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ColorFilter from "../components/ColorFilter.astro";
+import templates from "../config/data.json";
+
+const lang = Astro.cookies.get("lang")?.value || "es";
+---
+
+<Layout>
+  <div class="flex flex-col md:flex-row gap-6">
+    <!-- Filtro lateral -->
+    <aside class="md:w-64">
+      <ColorFilter lang={lang} />
+    </aside>
+
+    <!-- Galería -->
+    <section class="flex-1">
+      <h1 class="text-2xl font-bold mb-6 text-center md:text-left">
+        {lang === "es" ? "Galería de Plantillas" : "Template Gallery"}
+      </h1>
+
+      <!-- Input para filtro de texto -->
+      <input
+        type="text"
+        id="textFilterInput"
+        placeholder={lang === "es"
+          ? "Filtrar por nombre o descripción..."
+          : "Filter by name or description..."}
+        class="mb-6 w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
+      />
+
+      <div
+        id="templatesGrid"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-300"
+      >
+        {
+          templates.map((template) => (
+            <div
+              class="template-card bg-white shadow-sm rounded-2xl overflow-hidden border border-gray-200 hover:shadow-md transition-all duration-300"
+              data-colors={template.colors.join(",")}
+              data-name={
+                template.title[lang]?.toLowerCase() ||
+                template.title["es"].toLowerCase()
+              }
+              data-description={
+                template.description[lang]?.toLowerCase() ||
+                template.description["es"].toLowerCase()
+              }
+            >
+              <img
+                src={template.image}
+                alt={template.name}
+                class="w-full h-48 object-cover"
+              />
+              <div class="p-4 space-y-2">
+                <h2 class="text-xl font-semibold text-gray-800 capitalize">
+                  {template.title[lang] || template.title["es"]}
+                </h2>
+                <p class="text-gray-600 text-sm">
+                  {template.description[lang] || template.description["es"]}
+                </p>
+                <div class="flex flex-wrap items-center gap-2 mt-2">
+                  {template.colors.map((color) => (
+                    <span
+                      class="w-5 h-5 rounded-full border"
+                      style={`background-color: ${color};`}
+                      title={color}
+                    />
+                  ))}
+                </div>
+                <a
+                  href={`/template/${template.name}`}
+                  class="inline-block cursor-pointer mt-3 text-sm font-medium text-white bg-indigo-500 hover:bg-indigo-600 px-4 py-2 rounded-lg transition"
+                >
+                  {lang === "es" ? "Ver plantilla" : "View Template"}
+                </a>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- Controles de paginación -->
+      <div class="flex justify-center items-center gap-4 mt-6">
+        <button
+          id="prevPageBtn"
+          class="px-4 py-2 cursor-pointer bg-gray-300 rounded disabled:opacity-50"
+          disabled
+        >
+          {lang === "es" ? "Anterior" : "Previous"}
+        </button>
+
+        <span id="pageIndicator" class="font-semibold">1 / 1</span>
+
+        <button
+          id="nextPageBtn"
+          class="px-4 py-2 cursor-pointer bg-gray-300 rounded disabled:opacity-50"
+          disabled
+        >
+          {lang === "es" ? "Siguiente" : "Next"}
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <script type="module">
+    const lang = localStorage.getItem("lang") || "es";
+    const textFilterInput = document.getElementById("textFilterInput");
+    const templatesGrid = document.getElementById("templatesGrid");
+    const prevPageBtn = document.getElementById("prevPageBtn");
+    const nextPageBtn = document.getElementById("nextPageBtn");
+    const pageIndicator = document.getElementById("pageIndicator");
+
+    let currentPage = 1;
+    const itemsPerPage = 25;
+
+    function normalizeText(text) {
+      return text
+        .toLowerCase()
+        .replace(/[áäâà]/g, "a")
+        .replace(/[éëêè]/g, "e")
+        .replace(/[íïîì]/g, "i")
+        .replace(/[óöôò]/g, "o")
+        .replace(/[úüûù]/g, "u")
+    }
+
+    // Recupera colores seleccionados de localStorage
+    function getSelectedColors() {
+      try {
+        return JSON.parse(localStorage.getItem("selectedColors")) || [];
+      } catch {
+        return [];
+      }
+    }
+
+    // Aplica filtro por color y texto y devuelve el listado visible
+    function getFilteredCards() {
+      const textFilter = textFilterInput.value.trim().toLowerCase();
+      const selectedColors = getSelectedColors();
+
+      return Array.from(document.querySelectorAll(".template-card")).filter(
+        (card) => {
+          const colors = card.dataset.colors.split(",");
+          const name = normalizeText(card.dataset.name);
+          const description = normalizeText(card.dataset.description);
+
+          const matchesColor =
+            selectedColors.length === 0 ||
+            selectedColors.every((c) => colors.includes(c));
+
+          const matchesText =
+            !textFilter ||
+            name.includes(textFilter) ||
+            description.includes(textFilter);
+
+          return matchesColor && matchesText;
+        },
+      );
+    }
+
+    // Muestra solo las tarjetas de la página actual
+    function showPage(page) {
+      const filteredCards = getFilteredCards();
+      const totalPages = Math.ceil(filteredCards.length / itemsPerPage);
+
+      // Validar página
+      if (page < 1) page = 1;
+      if (page > totalPages) page = totalPages || 1;
+
+      currentPage = page;
+
+      // Oculta todas
+      document.querySelectorAll(".template-card").forEach((card) => {
+        card.style.display = "none";
+      });
+
+      // Muestra las de la página actual
+      const start = (currentPage - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      filteredCards.slice(start, end).forEach((card) => {
+        card.style.display = "block";
+      });
+
+      // Actualiza botones y texto
+      pageIndicator.textContent = `${currentPage} / ${totalPages || 1}`;
+      prevPageBtn.disabled = currentPage === 1;
+      nextPageBtn.disabled = currentPage === totalPages || totalPages === 0;
+    }
+
+    // Eventos botones paginación
+    prevPageBtn.addEventListener("click", () => {
+      showPage(currentPage - 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    nextPageBtn.addEventListener("click", () => {
+      showPage(currentPage + 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Evento cambio filtro color
+    window.addEventListener("color-filter-changed", () => {
+      currentPage = 1;
+      showPage(currentPage);
+    });
+
+    // Evento input texto
+    textFilterInput.addEventListener("input", () => {
+      currentPage = 1;
+      showPage(currentPage);
+    });
+
+    // Mostrar inicial
+    showPage(currentPage);
+  </script>
+</Layout>

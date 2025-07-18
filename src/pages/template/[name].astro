@@ -1,0 +1,53 @@
+---
+import templates from "../../config/data.json";
+import Layout from "../../layouts/Layout.astro";
+const { name } = Astro.params;
+
+const template = name ? templates.filter((t) => t.name === name) : [];
+const found = template.length > 0;
+---
+
+<Layout>
+  {found ? (
+    <div>
+      <!-- Controles de ancho -->
+      <div class="flex justify-center gap-2 flex-wrap">
+        {[
+          { label: "📱 375px", width: "375px" },
+          { label: "📱 480px", width: "480px" },
+          { label: "📲 768px", width: "768px" },
+          { label: "💻 1024px", width: "1024px" },
+          { label: "🖥️ 100%", width: "100%" }
+        ].map(({ label, width }) => (
+          <button
+            class="px-4 py-2 text-sm font-medium cursor-pointer bg-gray-100 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-300 transition"
+            onclick={`document.getElementById('previewFrame').style.width='${width}'`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      <!-- Iframe -->
+      <div class="w-full flex justify-center">
+        <iframe
+          id="previewFrame"
+          src={`/templates/${template[0].name}/index.html`}
+          sandbox="allow-scripts allow-same-origin"
+          loading="lazy"
+          class="border border-gray-300 shadow rounded-xl transition-all"
+          style="width: 100%;"
+        ></iframe>
+      </div>
+
+      <script>
+        document.addEventListener("contextmenu", (e) => e.preventDefault());
+      </script>
+    </div>
+  ) : (
+    <div class="text-center py-16 text-gray-600">
+      <h1 class="text-3xl font-bold mb-4">Plantilla no encontrada</h1>
+      <p>La plantilla solicitada no existe.</p>
+    </div>
+  )}
+</Layout>
