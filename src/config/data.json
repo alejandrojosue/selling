@@ -34,5 +34,41 @@
       "blue",
       "white"
     ]
+  },
+  {
+    "name": "sungla",
+    "target": "template03",
+    "title": {
+      "es": "Soluciones ProTech",
+      "en": "ProTech Solutions"
+    },
+    "description": {
+      "es": "Bootstrap, Tienda, Gafas, Moda, Promociones, Precios, Responsive, Productos.",
+      "en": "Bootstrap, Store, Glasses, Fashion, Promotions, Prices, Responsive, Products."
+    },
+    "image": "/img/template03.JPG",
+    "colors": [
+      "blue",
+      "white",
+      "lightgrey"
+    ]
+  },
+  {
+    "name": "protech-soluciones",
+    "target": "template04",
+    "title": {
+      "es": "Soluciones ProTech",
+      "en": "ProTech Solutions"
+    },
+    "description": {
+      "es": "Bootstrap, Tecnología, Innovación, Soporte Técnico, Redes, Desarrollo Web, Creatividad.",
+      "en": "Bootstrap, Technology, Innovation, Technical Support, Networks, Web Development, Creativity."
+    },
+    "image": "/img/template04.JPG",
+    "colors": [
+      "red",
+      "white",
+      "lightgrey"
+    ]
   }
 ]
